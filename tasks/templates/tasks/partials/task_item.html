@@ -1,20 +1,43 @@
-<div id="task-{{ task.id }}">
-    <input type="checkbox" disabled {% if task.completed %}checked{% endif %}>
-    <span {% if task.completed %}style="text-decoration: line-through;"{% endif %}>
-        {{ task.title }}
-    </span>
-    <button 
-    hx-delete="{% url 'delete_task' task.id %}"
-    hx-target="#task-{{ task.id }}"
-    hx-swap="outerHTML"
-    hx-confirm="Delete this task?"
->
-    ❌
-</button>
-    <button 
-    hx-get="{% url 'edit_task' task.id %}"
-    hx-target="#task-{{ task.id }}"
-    hx-swap="outerHTML">
-    ✏️
-</button>
+<div class="task-card {% if task.completed %}task-done{% endif %}" id="task-{{ task.id }}">
+    <input type="hidden" name="title" value="{{ task.title }}" id="title-{{ task.id }}">
+    <label class="checkbox-wrap" title="{% if task.completed %}Mark incomplete{% else %}Mark complete{% endif %}">
+        <input
+            type="checkbox"
+            name="completed"
+            {% if task.completed %}checked{% endif %}
+            hx-post="{% url 'update_task' task.id %}"
+            hx-target="#task-{{ task.id }}"
+            hx-swap="outerHTML"
+            hx-include="#title-{{ task.id }}">
+        <span class="checkmark">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"/>
+            </svg>
+        </span>
+    </label>
+
+    <span class="task-title">{{ task.title }}</span>
+
+    <div class="task-actions">
+        <button class="task-btn task-btn-edit"
+                title="Edit"
+                hx-get="{% url 'edit_task' task.id %}"
+                hx-target="#task-{{ task.id }}"
+                hx-swap="outerHTML">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/>
+            </svg>
+        </button>
+        <button class="task-btn task-btn-delete"
+                title="Delete"
+                hx-delete="{% url 'delete_task' task.id %}"
+                hx-target="#task-{{ task.id }}"
+                hx-swap="outerHTML"
+                hx-confirm="Delete this task?">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="3 6 5 6 21 6"/>
+                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/>
+            </svg>
+        </button>
+    </div>
 </div>
