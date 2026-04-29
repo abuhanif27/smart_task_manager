@@ -13,6 +13,7 @@
 <form hx-post="{% url 'add_task' %}" 
       hx-target="#task-list" 
       hx-swap="beforeend">
+    {% csrf_token %}
     
     <input type="text" name="title" placeholder="Enter task" required>
     <button type="submit">Add</button>
