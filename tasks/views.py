@@ -21,3 +21,22 @@ def add_task(request):
         html = render_to_string("tasks/partials/task_item.html", {"task": task})
 
         return HttpResponse(html)
+    
+
+def delete_task(request, id):
+    task = Task.objects.get(id=id)
+    task.delete()
+    return HttpResponse("")
+
+def edit_task(request, id):
+    task = Task.objects.get(id=id)
+    html = render_to_string("tasks/partials/task_edit.html", {"task": task})
+    return HttpResponse(html)
+
+def update_task(request, id):
+    task = Task.objects.get(id=id)
+    task.title = request.POST.get("title")
+    task.save()
+
+    html = render_to_string("tasks/partials/task_item.html", {"task": task})
+    return HttpResponse(html)

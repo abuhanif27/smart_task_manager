@@ -1,0 +1,11 @@
+<!-- task_edit.html -->
+<div id="task-{{ task.id }}">
+    <form 
+        hx-post="{% url 'update_task' task.id %}"
+        hx-target="#task-{{ task.id }}"
+        hx-swap="outerHTML">
+
+        <input type="text" name="title" value="{{ task.title }}">
+        <button type="submit">Save</button>
+    </form>
+</div>
