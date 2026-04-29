@@ -6,6 +6,7 @@
         hx-swap="outerHTML">
 
         <input type="text" name="title" value="{{ task.title }}">
+        <input type="checkbox" name="completed" {% if task.completed %}checked{% endif %}>
         <button type="submit">Save</button>
     </form>
 </div>

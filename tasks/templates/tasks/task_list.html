@@ -9,6 +9,29 @@
 
 <h1>Task Manager ⚡</h1>
 
+<input 
+    type="text" 
+    name="q"
+    placeholder="Search tasks..."
+    hx-get="{% url 'search_tasks' %}"
+    hx-target="#task-list"
+    hx-trigger="keyup changed delay:500ms"
+>
+
+<div>
+    <button 
+        hx-get="{% url 'filter_tasks' %}?status=all"
+        hx-target="#task-list">
+        All
+    </button>
+
+    <button 
+        hx-get="{% url 'filter_tasks' %}?status=active"
+        hx-target="#task-list">
+        Active
+    </button>
+</div>
+
 <div id="loading" style="display:none;">
     ⏳ Loading...
 </div>

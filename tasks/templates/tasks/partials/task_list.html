@@ -1,0 +1,7 @@
+<!-- templates/tasks/partials/task_list.html -->
+
+{% for task in tasks %}
+    {% include "tasks/partials/task_item.html" %}
+{% empty %}
+    <p>No tasks found</p>
+{% endfor %}

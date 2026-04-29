@@ -1,5 +1,8 @@
 <div id="task-{{ task.id }}">
-    {{ task.title }}
+    <input type="checkbox" disabled {% if task.completed %}checked{% endif %}>
+    <span {% if task.completed %}style="text-decoration: line-through;"{% endif %}>
+        {{ task.title }}
+    </span>
     <button 
     hx-delete="{% url 'delete_task' task.id %}"
     hx-target="#task-{{ task.id }}"

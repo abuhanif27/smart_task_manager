@@ -41,7 +41,26 @@ def edit_task(request, id):
 def update_task(request, id):
     task = Task.objects.get(id=id)
     task.title = request.POST.get("title")
+    task.completed = request.POST.get("completed") == "on"
     task.save()
 
     html = render_to_string("tasks/partials/task_item.html", {"task": task})
+    return HttpResponse(html)
+
+def search_tasks(request):
+    query = request.GET.get("q", "")
+    tasks = Task.objects.filter(title__icontains=query)
+
+    html = render_to_string("tasks/partials/task_list.html", {"tasks": tasks})
+    return HttpResponse(html)
+
+def filter_tasks(request):
+    status = request.GET.get("status")
+
+    if status == "active":
+        tasks = Task.objects.filter(completed=False)
+    else:
+        tasks = Task.objects.all()
+
+    html = render_to_string("tasks/partials/task_list.html", {"tasks": tasks})
     return HttpResponse(html)
