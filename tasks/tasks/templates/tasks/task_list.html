@@ -1,0 +1,31 @@
+<!-- task_list.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>HTMX Tasks</title>
+    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+</head>
+<body>
+
+<h1>Task Manager ⚡</h1>
+
+<!-- Form -->
+<form hx-post="{% url 'add_task' %}" 
+      hx-target="#task-list" 
+      hx-swap="beforeend">
+    
+    <input type="text" name="title" placeholder="Enter task" required>
+    <button type="submit">Add</button>
+</form>
+
+<hr>
+
+<!-- Task List -->
+<div id="task-list">
+    {% for task in tasks %}
+        {% include "tasks/partials/task_item.html" %}
+    {% endfor %}
+</div>
+
+</body>
+</html>
