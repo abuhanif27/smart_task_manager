@@ -1,12 +1,13 @@
 <div id="task-{{ task.id }}">
     {{ task.title }}
     <button 
-        hx-delete="{% url 'delete_task' task.id %}"
-        hx-target="#task-{{ task.id }}"
-        hx-swap="outerHTML"
-        hx-confirm="Are you sure?">
-        ❌
-    </button>
+    hx-delete="{% url 'delete_task' task.id %}"
+    hx-target="#task-{{ task.id }}"
+    hx-swap="outerHTML"
+    hx-confirm="Delete this task?"
+>
+    ❌
+</button>
     <button 
     hx-get="{% url 'edit_task' task.id %}"
     hx-target="#task-{{ task.id }}"

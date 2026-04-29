@@ -1,3 +1,6 @@
+from pydoc import html
+from urllib import response
+
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.template.loader import render_to_string
@@ -19,8 +22,10 @@ def add_task(request):
         task = Task.objects.create(title=title)
 
         html = render_to_string("tasks/partials/task_item.html", {"task": task})
-
-        return HttpResponse(html)
+        response = HttpResponse(html)
+        response["HX-Trigger"] = "taskAdded"
+        return response
+        
     
 
 def delete_task(request, id):

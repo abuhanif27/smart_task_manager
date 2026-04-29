@@ -5,14 +5,22 @@
     <title>HTMX Tasks</title>
     <script src="https://unpkg.com/htmx.org@1.9.10"></script>
 </head>
-<body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
+<body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' hx-on="taskAdded: document.getElementById('messages').innerHTML = '✅ Task added!'">
 
 <h1>Task Manager ⚡</h1>
+
+<div id="loading" style="display:none;">
+    ⏳ Loading...
+</div>
+
+<div id="messages"></div>
 
 <!-- Form -->
 <form hx-post="{% url 'add_task' %}" 
       hx-target="#task-list" 
-      hx-swap="beforeend">
+      hx-swap="beforeend"
+      hx-on="htmx:afterRequest: this.reset()"
+      hx-indicator="#loading">
     {% csrf_token %}
     
     <input type="text" name="title" placeholder="Enter task" required>
